@@ -20,9 +20,17 @@ function createTimetableRows(){
 createTimetableRows()
 
 
-var timeColumn = $('<div>').addClass("col-2");
-var inputColumn = $('<input>').addClass("col-8");
-var buttonColumn = $('<button>').addClass("col-2 col-btn btn-primary");
+var timeColumn = $('<div>').addClass("hour col-2");
+var inputColumn = $('<input>').addClass("description col-8");
+var buttonColumn = $('<button>').addClass("saveBtn col-2 col-btn btn-primary");
 var timetableRow = $('.row');
 
 timetableRow.append(timeColumn,inputColumn,buttonColumn)
+
+function addHours(){
+    for (var j = 0; j < times.length; j++){
+        timeColumn.text(times[j]);
+    }
+}
+
+addHours()
