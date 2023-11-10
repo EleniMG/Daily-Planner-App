@@ -21,7 +21,7 @@ createTimetableRows()
 
 
 var timeColumn = $('<div>').addClass("hour col-2");
-var inputColumn = $('<input>').addClass("description col-8");
+var inputColumn = $('<input>').addClass("description textarea col-8");
 var buttonColumn = $('<button>').addClass("saveBtn col-2 col-btn btn-primary");
 var timetableRow = $('.row');
 
