@@ -27,10 +27,7 @@ var timetableRow = $('.row');
 
 timetableRow.append(timeColumn,inputColumn,buttonColumn)
 
-function addHours(){
-    for (var j = 0; j < times.length; j++){
-        timeColumn.text(times[j]);
+$('.hour').each(function(index){
+    $(this).text(times[index])
     }
-}
-
-addHours()
+)
