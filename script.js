@@ -17,17 +17,17 @@ createTimetableRows();
 // An object will be needed to represent each hour and the entry for that hour
 
 var schedule = [];
-var currentSchedule = JSON.parse(window.localStorage.getItem("schedule"));
+var currentSchedule = JSON.parse(window.localStorage.getItem("schedule")) || "";
 
 $.each(times, function (index) {
   var hourObject = new Object();
   schedule.push(hourObject);
   hourObject.id = index;
   hourObject.hour = times[index];
-  hourObject.task = currentSchedule[index].task || '';
+  hourObject.task = currentSchedule[index].task || "";
 })
 
-console.log({ schedule });
+console.log({ schedule }, { currentSchedule });
 
 // Compiling Bootstrap grid columns using jQuery
 var timeColumn = $("<div>").addClass("hour col-2");
@@ -88,3 +88,12 @@ saveButton.on("click", function updateSchedule(event) {
   console.log(inputValue, event, Number(event.currentTarget.id));
   console.log({ currentSchedule });
 });
+
+
+// function colourCodedTimeblock(){
+//     if(dayjs().isBefore(dayjs(), 'hour')){
+//         inputColumn.addClass('past')
+//     }
+// }
+
+// colourCodedTimeblock()
