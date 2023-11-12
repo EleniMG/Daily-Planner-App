@@ -95,11 +95,3 @@ function resetDay(){
         console.log("new minute!")
     }
 }
-
-// function colourCodedTimeblock(){
-//     if(dayjs().isBefore(dayjs(), 'hour')){
-//         inputColumn.addClass('past')
-//     }
-// }
-
-// colourCodedTimeblock()
