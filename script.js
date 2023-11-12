@@ -17,14 +17,15 @@ createTimetableRows();
 // An object will be needed to represent each hour and the entry for that hour
 
 var schedule = [];
-var currentSchedule = JSON.parse(window.localStorage.getItem("schedule")) || "";
+var currentSchedule = JSON.parse(window.localStorage.getItem("schedule")) || [];
+var localStorageScheduleHasValues = currentSchedule.length > 0 // Returns a boolean, purpose is for the hourObject.task to be empty or the input value
 
 $.each(times, function (index) {
   var hourObject = new Object();
   schedule.push(hourObject);
   hourObject.id = index;
   hourObject.hour = times[index];
-  hourObject.task = currentSchedule[index].task || "";
+  hourObject.task = localStorageScheduleHasValues ? currentSchedule[index].task : "";
 })
 
 console.log({ schedule }, { currentSchedule });
@@ -89,6 +90,11 @@ saveButton.on("click", function updateSchedule(event) {
   console.log({ currentSchedule });
 });
 
+function resetDay(){
+    if(dayjs().startOf('minute')){
+        console.log("new minute!")
+    }
+}
 
 // function colourCodedTimeblock(){
 //     if(dayjs().isBefore(dayjs(), 'hour')){
