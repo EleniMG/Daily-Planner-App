@@ -85,13 +85,27 @@ saveButton.on("click", function updateSchedule(event) {
     $().text(currentSchedule[index].task);
   });
 
-  // schedule = JSON.parse(window.localStorage.getItem(schedule[Number(event.currentTarget.id)].task));
   console.log(inputValue, event, Number(event.currentTarget.id));
   console.log({ currentSchedule });
 });
 
-function resetDay(){
-    if(dayjs().startOf('minute')){
-        console.log("new minute!")
+// function colourCodeTimeblocks(){
+//     var currentHour = dayjs().format('k');
+
+//     if (currentHour > (Number($('input[id'))))
+//     console.log(currentHour);
+// }
+
+// colourCodeTimeblocks()
+
+setInterval(resetSchedule, 1000)
+
+function resetSchedule(){
+    var currentHour = dayjs().hour();
+    // var currentMinute = dayjs().minute();
+
+    if(currentHour === 0){
+        localStorage.removeItem('schedule');
+        location.reload();
     }
 }
