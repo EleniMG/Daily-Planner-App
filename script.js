@@ -37,8 +37,11 @@ var inputColumn = $("<input>")
   .attr("name", "task-entry");
 var buttonColumn = $("<button>").addClass("saveBtn col-2 col-btn btn-primary");
 var timetableRow = $(".row");
+var resetButton = $("<button>").addClass("btn btn-success").text("Reset").css("margin", "15px").css("font-size", "20px")
 
 timetableRow.append(timeColumn, inputColumn, buttonColumn);
+timetableContainer.append(resetButton)
+
 
 // Adding the hours to the schedule
 $(".hour").each(function (index) {
@@ -98,14 +101,10 @@ saveButton.on("click", function updateSchedule(event) {
 
 // colourCodeTimeblocks()
 
-setInterval(resetSchedule, 1000)
+resetButton.on("click", resetSchedule)
 
-function resetSchedule(){
-    var currentHour = dayjs().hour();
-    // var currentMinute = dayjs().minute();
-
-    if(currentHour === 0){
-        localStorage.removeItem('schedule');
-        location.reload();
-    }
+function resetSchedule(event){
+    event.preventDefault();
+    localStorage.removeItem('schedule');
+    location.reload();
 }
