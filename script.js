@@ -40,7 +40,7 @@ var timetableRow = $(".row");
 var resetButton = $("<button>").addClass("btn btn-success").text("Reset").css("margin", "15px").css("font-size", "20px")
 
 timetableRow.append(timeColumn, inputColumn, buttonColumn);
-timetableContainer.append(resetButton)
+$('header').append(resetButton)
 
 
 // Adding the hours to the schedule
@@ -108,3 +108,4 @@ function resetSchedule(event){
     localStorage.removeItem('schedule');
     location.reload();
 }
+
