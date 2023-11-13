@@ -1,7 +1,7 @@
 var currentTime = dayjs().format("dddd Do MMMM YYYY");
 $("#currentDay").text(currentTime);
 
-var times = ["9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm"];
+var times = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
 var timetableContainer = $(".container");
 
 // Creating as many rows as there are hour entries
@@ -12,23 +12,6 @@ function createTimetableRows() {
 }
 
 createTimetableRows();
-
-// Will need to save the input value to a variable
-// An object will be needed to represent each hour and the entry for that hour
-
-var schedule = [];
-var currentSchedule = JSON.parse(window.localStorage.getItem("schedule")) || [];
-var localStorageScheduleHasValues = currentSchedule.length > 0 // Returns a boolean, purpose is for the hourObject.task to be empty or the input value
-
-$.each(times, function (index) {
-  var hourObject = new Object();
-  schedule.push(hourObject);
-  hourObject.id = index;
-  hourObject.hour = times[index];
-  hourObject.task = localStorageScheduleHasValues ? currentSchedule[index].task : "";
-})
-
-console.log({ schedule }, { currentSchedule });
 
 // Compiling Bootstrap grid columns using jQuery
 var timeColumn = $("<div>").addClass("hour col-2");
@@ -43,6 +26,43 @@ timetableRow.append(timeColumn, inputColumn, buttonColumn);
 $('header').append(resetButton)
 
 
+// Will need to save the input value to a variable
+// An object will be needed to represent each hour and the entry for that hour
+
+var schedule = [];
+var currentSchedule = JSON.parse(window.localStorage.getItem("schedule")) || [];
+var localStorageScheduleHasValues = currentSchedule.length > 0 // Returns a boolean, purpose is for the hourObject.task to be empty or the input value
+
+function colourCodedTimeblocks(currentHour, scheduleHour){
+    var classString = ""
+
+    if (scheduleHour > currentHour) {
+        return classString = "future"
+      } 
+      
+    if (scheduleHour === currentHour) {
+        return classString = "present"
+      } 
+    if (scheduleHour < currentHour) {
+        return classString = "past"
+      }
+
+}
+
+$.each(times, function (index) {
+  var hourObject = new Object();
+  var currentHour = Number(dayjs().format('H'))
+  var scheduleHour = Number(times[index].split('').slice(0, 2).join(""))
+  var className = colourCodedTimeblocks(currentHour, scheduleHour)
+  console.log(currentHour, scheduleHour)
+  schedule.push(hourObject);
+  hourObject.id = index;
+  hourObject.hour = times[index];
+  hourObject.task = localStorageScheduleHasValues ? currentSchedule[index].task : "";
+  hourObject.status = className
+})
+
+
 // Adding the hours to the schedule
 $(".hour").each(function (index) {
   $(this).text(schedule[index].hour);
@@ -53,6 +73,7 @@ $(".textarea").each(function (index) {
   $(this).attr("id", [index]);
   $(this).attr("data-index", [index]);
   $(this).val(schedule[index].task);
+  $(this).addClass(schedule[index].status)
 });
 
 $(".saveBtn").each(function (index) {
@@ -91,15 +112,6 @@ saveButton.on("click", function updateSchedule(event) {
   console.log(inputValue, event, Number(event.currentTarget.id));
   console.log({ currentSchedule });
 });
-
-// function colourCodeTimeblocks(){
-//     var currentHour = dayjs().format('k');
-
-//     if (currentHour > (Number($('input[id'))))
-//     console.log(currentHour);
-// }
-
-// colourCodeTimeblocks()
 
 resetButton.on("click", resetSchedule)
 
